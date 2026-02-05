@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: money-tracker
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/money_tracker
+    username: ${DB_USERNAME:money_tracker}
+    password: ${DB_PASSWORD:money_tracker}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    show-sql: false
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework: INFO
+
