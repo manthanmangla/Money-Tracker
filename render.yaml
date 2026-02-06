@@ -14,6 +14,14 @@ services:
         fromDatabase:
           name: money-tracker-db
           property: connectionString
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: money-tracker-db
+          property: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: money-tracker-db
+          property: password
       - key: JWT_SECRET
         generateValue: true
       - key: RATE_LIMIT_ENABLED
@@ -25,5 +33,3 @@ services:
     plan: free
     region: oregon
     ipAllowList: []
-    databaseName: money_tracker
-    user: money_tracker
