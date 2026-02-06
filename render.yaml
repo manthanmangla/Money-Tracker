@@ -28,7 +28,7 @@ services:
         value: "true"
     healthCheckPath: /v3/api-docs
 
-  - type: pserv
-    name: money-tracker-db
+databases:
+  - name: money-tracker-db
     plan: free
     region: oregon
