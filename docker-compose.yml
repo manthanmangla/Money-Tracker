@@ -1,0 +1,32 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/money_tracker
+      SPRING_DATASOURCE_USERNAME: money_tracker
+      SPRING_DATASOURCE_PASSWORD: money_tracker
+      JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_DB: money_tracker
+      POSTGRES_USER: money_tracker
+      POSTGRES_PASSWORD: money_tracker
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U money_tracker -d money_tracker"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:

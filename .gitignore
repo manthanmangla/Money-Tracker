@@ -12,3 +12,18 @@ target/
 
 dependency-reduced-pom.xml
 
+
+# Cursor IDE
+.cursor/
+
+# Node modules
+node_modules/
+frontend/node_modules/
+
+# Build outputs
+frontend/dist/
+frontend/.angular/
+
+# Temporary files
+*.py
+patch_*.py

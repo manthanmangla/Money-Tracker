@@ -10,15 +10,38 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     show-sql: false
 
+security:
+  jwt:
+    # Must be base64 and decode to >= 32 bytes (256 bits) for HS256. Production: openssl rand -base64 32
+    # Value must be quoted so YAML does not parse 9E+9 as a number
+    secret: "${JWT_SECRET:9E+9K6EGk+BCl1CPncJDZTWGMbkBKjt2jZgaN4a/6C2jGxfc2EK7KcTSSbsWo7wfcXAQdQhT5Z9U5MXGs/y9bA==}"
+    expiration-seconds: 86400
+  cors:
+    # Override in env: security.cors.allowed-origins[0]=https://app.example.com
+    allowed-origins:
+      - http://localhost:3000
+      - http://localhost:4200
+      - http://localhost:8080
+  rate-limit:
+    enabled: ${RATE_LIMIT_ENABLED:true}
+    auth-requests-per-minute: ${RATE_LIMIT_AUTH_PER_MINUTE:10}
+
 server:
-  port: 8080
+  port: ${PORT:8081}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
 
 logging:
   level:

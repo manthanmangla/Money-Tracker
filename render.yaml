@@ -1,0 +1,29 @@
+# Render Blueprint: Money Tracker API
+# 1. Connect your repo to Render and use "Apply" with this file, or
+# 2. Create Web Service (Docker) + PostgreSQL manually and set env vars (see README).
+
+services:
+  - type: web
+    name: money-tracker-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: production
+      - key: SPRING_DATASOURCE_URL
+        fromDatabase:
+          name: money-tracker-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: RATE_LIMIT_ENABLED
+        value: "true"
+    healthCheckPath: /v3/api-docs
+
+  - type: pserv
+    name: money-tracker-db
+    plan: free
+    region: oregon
+    ipAllowList: []
+    databaseName: money_tracker
+    user: money_tracker
